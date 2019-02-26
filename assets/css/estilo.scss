@@ -1,0 +1,1400 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:500|Lato:400,400i,700');
+
+//Fuentes
+$fuenteTitulo: 'Fira Sans', sans-serif;
+$fuenteParrafo: 'Lato', sans-serif;
+
+//Colores base
+$pri: #FC6234;
+$sec: #072436;
+$gris: #707070;
+$blanco: white;
+$color1: #FC6234;
+$color2: #FFE86A;
+
+//// variables responsivas:
+$breakpoint-xs: 360px;
+$breakpoint-sm: 767px;
+$breakpoint-md: 1023px;
+$breakpoint-lg: 1360px;
+
+@mixin media($media) {
+  @if $media == xs {
+    @media (max-width: $breakpoint-sm) { @content; }
+  }
+  @else if $media == sm { //entre 767 a 1023
+    @media (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) { @content; }
+  }
+  @else if $media == md { //entre 1022 hasta 1360
+    @media (min-width: $breakpoint-md) and (max-width: $breakpoint-lg){ @content; }
+  }
+  @else if $media == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  }
+}
+
+// Gradient Border
+@mixin gradient-border($color1, $color2, $border-width, $direction) {
+  border: none;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(#{$direction}, $color1 0%, $color2 100%), linear-gradient(#{$direction}, $color1 0%, $color2 100%);
+  @if $direction == 'to right' or $direction == 'to left' {
+    @if $direction == 'to right' {
+      border-left: $border-width solid $color1;
+      border-right: $border-width solid $color2;
+    } @else {
+      border-left: $border-width solid $color2;
+      border-right: $border-width solid $color1;
+    }
+    background-position: 0 0, 0 100%;
+    background-size: 100% $border-width;
+  }
+
+  @if $direction == 'to top' or $direction == 'to bottom' {
+    @if $direction == 'to top' {
+      border-top: $border-width solid $color2;
+      border-bottom: $border-width solid $color1;
+    } @else {
+      border-top: $border-width solid $color1;
+      border-bottom: $border-width solid $color2;
+    }
+    background-position: 0 0, 100% 0;
+    background-size: $border-width 100%;
+  }
+}
+//Fin gradientes ******
+
+//transiciones
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+//fin transiciones *******
+
+//animaciones
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translate3d(0, -20%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes apareceOp {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+
+/*****************************/
+///El inicio de todo
+*{
+  padding: 0;
+  margin: 0;
+  font-family: $fuenteParrafo;
+  color: $gris;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font: {
+    weight: 400;
+    family: $fuenteTitulo;
+  }
+  text-transform: uppercase;
+  color: $pri;
+}
+
+h1{
+  font-size: 2.5em;
+  @include media(md) {
+    font-size: 2em;
+  }
+  @include media(sm) {
+    font-size: 2em;
+  }
+  @include media(xs) {
+    font-size: 1.6em;
+  }
+}
+
+p{
+  margin: 1em 0;
+  line-height: 1.5em;
+
+  @include media(sm) {
+    font-size: 18px;
+  }
+  @include media(xs) {
+    font-size: 16px;
+  }
+}
+
+a{
+  text-decoration: none;
+}
+
+
+
+//navegación:
+nav{
+  display: flex;
+  margin: auto;
+  max-height: 100px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 9%;
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  width: 100%;
+  background-color: $blanco;
+  z-index: 100;
+  @include transition(all .5s lineal);
+
+  @include media(sm) {
+    padding: 0;
+    max-height: 70px;
+  }
+  @include media(xs) {
+    padding: 0;
+    max-height: 70px;
+  }
+    & img.logo{
+      height: 35px;
+      padding: 1.5em 1em;
+      @include media(sm) {
+        margin-left: 4em;
+        height: 30px;
+        padding: 12px;
+      }
+      @include media(xs) {
+        margin-left: 9%;
+        height: 30px;
+        padding: 12px;
+      }
+    }
+    & ul{
+        display: flex;
+        @include media(sm) {
+          flex-flow: column nowrap;
+        }
+        @include media(xs) {
+          flex-flow: column nowrap;
+        }
+      & a img{
+        display: flex;
+        height: 60px;
+        margin-left: auto;
+        margin-right: 15px;
+        padding: 12px 0;
+        height: 45px;
+        @include media(lg) {
+          display: none;
+        }
+        @include media(md) {
+          display: none;
+        }
+        @include media(sm) {
+          margin-right: 4em;
+        }
+      }
+      & li{
+        text-transform: uppercase;
+        list-style: none;
+        padding: 2.5em 1em;
+        @include media(sm) {
+          background-color: darken($blanco, 3%);
+          padding: 1em 3em;
+          text-align: center;
+        }
+        @include media(xs) {
+          background-color: darken($blanco, 3%);
+          padding: 1em 3em;
+          text-align: center;
+        }
+      };
+      & a{
+        color: $gris;
+        font-size: .75em;
+        opacity: .5;
+        @include transition(opacity .5s ease-out);
+        &:hover{
+          opacity: 1;
+        }
+        &.active{
+          opacity: 1;
+        }
+      };
+
+    }
+}
+
+//figuras azules:
+.figura__azulFija, .figura__azulTeam{
+  position: fixed;
+  top: 0;
+  left: 63.6%;
+  height: 100vh;
+  width: 70%;
+  background: $sec;
+  transform: skewX(-28deg);
+  z-index: -5;
+  @include media(sm) {
+    display: none;
+  }
+  @include media(xs) {
+    display: none;
+  }
+
+}
+.figura__azulTeam{
+  position: absolute;
+  width: 90%;
+  top: 0;
+  left: -20%;
+  height: 100%;
+  transform: skewX(-25deg);
+  z-index: 4;
+  @include media(md) {
+    display: none;
+  }
+}
+
+//section about
+.figura__azul1{
+  position: absolute;
+  top: 0;
+  right: 59.6%;
+  height: 70vh;
+  width: 60%;
+  background: $sec;
+  transform: skewX(-28deg);
+  transform-origin: right;
+  z-index: 2;
+  @include media(sm){
+    display: none;
+  }
+  @include media(xs){
+    display: none;
+  }
+}
+.fondo_blanco{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 70vh;
+  width: 100%;
+  background: $blanco;
+  z-index: 1;
+  @include media(xs) {
+    display: none;
+  }
+  @include media(sm) {
+    display: none;
+  }
+
+}
+
+
+//triangulos
+
+.trianAzul_bottomLeft{
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    height: 0px;
+    width: 0px;
+    //border-top: 100px solid transparent;
+    //border-left: 100px solid transparent;
+    border-right: 100vw solid transparent;
+    border-bottom: 80px solid $sec;
+    z-index: -10;
+    @include media(lg) {
+      display: none;
+    }
+    @include media(md) {
+      display: none;
+    }
+}
+
+.trianAzul_bottomRight{
+    position: absolute;
+    right: 0;
+    bottom: 0px;
+    height: 0px;
+    width: 0px;
+    //border-top: 100px solid transparent;
+    //border-left: 100px solid transparent;
+    border-left: 100vw solid transparent;
+    border-bottom: 80px solid $sec;
+    z-index: -10;
+    @include media(lg) {
+      display: none;
+    }
+    @include media(md) {
+      display: none;
+    }
+}
+
+.trianAzul_topLeft{
+    position: absolute;
+    left: 0;
+    top: 0px;
+    height: 0px;
+    width: 0px;
+    //border-top: 100px solid transparent;
+    //border-left: 100px solid transparent;
+    border-right: 100vw solid transparent;
+    border-top: 80px solid $sec;
+    z-index: -10;
+    @include media(lg) {
+      display: none;
+    }
+    @include media(md) {
+      display: none;
+    }
+}
+
+.trianAzul_topRight{
+    position: absolute;
+    right: 0;
+    top: 0px;
+    height: 0px;
+    width: 0px;
+    //border-top: 100px solid transparent;
+    //border-left: 100px solid transparent;
+    border-left: 100vw solid transparent;
+    border-top: 80px solid $sec;
+    z-index: -10;
+    @include media(lg) {
+      display: none;
+    }
+    @include media(md) {
+      display: none;
+    }
+}
+
+//header
+header#inicio{
+  height: 90vh;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  box-sizing: border-box;
+  padding: 12em 10%;
+  @include media(sm){
+    flex-direction: column;
+    height: auto;
+    text-align: right;
+    margin-top: 20%;
+    padding: 3em 10%;
+    align-items: stretch;
+    & .trianAzul_bottomLeft{
+      border-bottom: 300px solid $sec;
+    }
+  }
+
+  @include media(xs) {
+    flex-direction: column;
+    height: auto;
+    text-align: right;
+    margin-top: 20%;
+    padding: 3em 10%;
+    align-items: flex-start;
+    & .trianAzul_bottomLeft{
+      border-bottom: 300px solid $sec;
+    }
+  }
+  & .header__info{
+    flex: 0 1 400px;
+    & p{
+      font-size: 1.2em;
+    }
+  }
+  & .header__logo{
+    @include media(sm){
+      text-align: left;
+    }
+    & img{
+      margin-top: 5em;
+      width: 180px;
+
+      @include media(sm){
+        height: 100px;
+        margin-top: 0;
+        width: auto;
+      }
+      @include media(xs){
+        height: 100px;
+        margin-top: 0;
+        width: auto;
+      }
+    }
+  };
+
+}
+
+//about
+section#about{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 80vh;
+  box-sizing: border-box;
+  padding: 12em 10%;
+  @include media(sm) {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0;
+    height: auto;
+  }
+
+  @include media(xs) {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0;
+    height: auto;
+  }
+  & > div.section__info{
+    flex: 0 1 250px;
+    z-index: 3;
+
+    @include media(sm) {
+      padding: 20% 10% 30%;
+      background-color: $sec;
+    }
+    @include media(xs) {
+      padding: 20% 10% 30%;
+      background-color: $sec;
+    }
+    & p, em{
+      color: $blanco;
+    }
+  };
+  & > div:last-child{
+    margin-left: 30%;
+    flex: 2;
+    display: inline-flex;
+    flex-direction: column;
+    z-index: 4;
+    @include media(md) {
+      margin-left: 20%;
+    }
+    @include media(sm) {
+      position: relative;
+      margin: 0;
+      padding: 40% 10%;
+
+    }
+    @include media(xs) {
+      position: relative;
+      margin: 0;
+      flex: 1 1 30%;
+      padding: 50% 10% 4em;
+      flex-flow: row wrap;
+      justify-content: space-around;
+    }
+    & .section__topics{
+      display: flex;
+      align-items: center;
+
+      @include media(xs){
+        flex-flow: column nowrap;
+      }
+    & img, h4, p{
+      display: flex;
+      flex-flow: row wrap;
+    }
+    & img{
+      background-color: $blanco;
+      border-radius: 50%;
+      border: 3px solid $sec;
+      padding: 5px;
+      margin-right: 10px;
+      height: 40px;
+
+      @include media(xs){
+        margin: 0;
+      }
+      &.active{
+        border: none;
+        padding: 10px;
+        background: linear-gradient(135deg, #FC6234 0%, #FFE86A 100%);
+        @include media(md){
+          padding: 8px;
+        }
+        @include media(xs){
+          padding: 8px;
+        }
+      }
+    };
+    & h4{
+      color: $sec;
+      position: relative;
+      @include media(md){
+        font-size: .9em;
+      }
+      @include media(sm){
+        font-size: .9em;
+      }
+      @include media(xs){
+        font-size: .9em;
+      }
+      &.active{
+        color: $pri;
+        &:before{
+          content: '⌃';
+          transform: rotate(90deg);
+          transform-origin: center;
+          position: absolute;
+          font-size: 2.5em;
+          color: $sec;
+          top: -15px;
+          right: -40px;
+
+          @include media(xs){
+            transform: rotate(0deg);
+            right: 25%;
+            top: 20px;
+          }
+        };
+      }
+    }
+    & p{
+      position: relative;
+      flex: 2;
+      margin-left: 4em;
+
+      @include media(xs){
+        display: none;
+      }
+      //aquí iba
+      }
+    }
+    & div.hola #topicsMobile{
+      text-align: center;
+      margin: 2em 0;
+      height: 100px;
+      position: relative;
+      @include media(lg){
+        display: none;
+      }
+      @include media(md){
+        display: none;
+      }
+      @include media(sm){
+        display: none;
+      }
+    }
+  };
+}
+
+section#mision{
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  background-color: $blanco;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 12em 10%;
+  @include media(sm) {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0;
+  }
+  @include media(xs) {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0;
+  }
+  & div.mision__logos{
+    margin-bottom: 3em;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    @include media(sm) {
+      padding: 0 10%;
+    }
+    @include media(xs) {
+      padding: 0 10%;
+      justify-content: space-around;
+    }
+    & img{
+      height: 90px;
+      @include media(sm){
+        margin: 1.5em 0;
+        max-height: 70px;
+        height: auto;
+        flex: 0 1 5%;
+      }
+      @include media(xs){
+        margin: 1.5em 0;
+        max-height: 40px;
+        height: auto;
+        flex: 0 1 5%;
+      }
+    }
+    & img:nth-child(3){
+      height: 110px;
+      @include media(sm){
+        height: 60px;
+        height: auto;
+      }
+      @include media(xs){
+        height: 60px;
+        height: auto;
+      }
+    }
+  }
+  & div.mision__contenido{
+    flex: 0 1 20%;
+    @include media(sm){
+      padding: 3em 10%;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+    @include media(xs){
+      padding: 3em 10%;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+    & a img{
+      height: 40px;
+      margin-top: 3em;
+      margin-right: 10px;
+    }
+  }
+  & div.mision__fotoEquipo{
+    flex: 0 1 70%;
+
+    @include media(sm){
+      width: 100%;
+    }
+    @include media(xs){
+      width: 100%;
+    }
+    & img{
+      width: 100%;
+    }
+  }
+}
+
+section#servicios{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: flex-end;
+  padding: 12em 10%;
+  & img.icon_svg{
+    height: 90%;
+  }
+  @include media(sm) {
+    display: flex;
+    flex-flow: column-reverse nowrap;
+    align-items: flex-start;
+    padding: 0;
+    position: relative;
+  }
+  @include media(xs) {
+    display: flex;
+    flex-flow: column-reverse nowrap;
+    align-items: flex-start;
+    padding: 0;
+    position: relative;
+  }
+  & .serv__diagram{
+    flex: 0 1 50%;
+    width: 100%;
+
+    @include media(sm){
+      position: relative;
+      margin: 0;
+      padding: 10% 0;
+      //margin: 0 auto;
+    }
+    @include media(xs){
+      position: relative;
+      margin: 0;
+      padding: 30% 0;
+      //margin: 0 auto;
+    }
+    & div.svg_todoServicios{
+      display: flex;
+      & svg{
+       margin: auto;
+     }
+     & svg.svg__servicios{
+       @include media(sm){
+         transform: scale(.8);
+       }
+
+       & text tspan{
+         text-transform: uppercase;
+         font-size: .8em;
+       }
+       & text.active{
+         fill: $pri;
+       }
+       & p, em{
+         color: #121314;
+         font-size: .95rem;
+         text-align: center;
+       }
+
+       & circle{
+         @include transition(fill .5s ease);
+         @include transition(stroke .5s ease);
+
+         &.svg__cadaServ{
+           position: relative;
+
+           &.active{
+             fill: $pri;
+             stroke: $pri;
+           }
+         }
+
+       }
+     }
+    };
+
+  }
+  & .serv__contenido{
+    flex: 0 1 20%;
+    text-align: right;
+
+    @include media(sm) {
+      text-align: left;
+      position: relative;
+      background-color: $sec;
+      padding: 6em 30% 3em 10%;
+    }
+    @include media(xs) {
+      text-align: left;
+      position: relative;
+      background-color: $sec;
+      padding: 6em 30% 3em 10%;
+    }
+    & p{
+      color: $blanco;
+    }
+  }
+}
+
+section#team{
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  background-color: $blanco;
+  box-sizing: border-box;
+  align-items: flex-end;
+  position: relative;
+  padding: 6em 10%;
+  @include media(md) {
+    display: flex;
+    background-color: $sec;
+    flex-flow: column-reverse wrap;
+  }
+  @include media(sm) {
+    display: flex;
+    background-color: $sec;
+    flex-flow: column-reverse wrap;
+  }
+  @include media(xs) {
+    display: flex;
+    background-color: $sec;
+    flex-flow: column-reverse nowrap;
+  }
+  & div.team__miembros{
+    display: flex;
+    flex: 0 1 70%;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    z-index: 7;
+    @include media(md) {
+      flex-flow: row wrap;
+      flex: 0 1 20%;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin-bottom: 2em;
+    }
+    @include media(sm) {
+      flex-flow: row wrap;
+      flex: 0 1 20%;
+      justify-content: space-around;
+      margin-bottom: 2em;
+    }
+    @include media(xs) {
+      flex-flow: column nowrap;
+      align-items: center;
+      margin-bottom: 2em;
+    }
+    & div.pd_miembro{
+      flex: 0 1 30%;
+      max-width: 25%;
+      min-width: 160px;
+      padding: 1em;
+      @include media(md) {
+        text-align: center;
+        min-width: auto;
+      }
+      @include media(sm) {
+        max-width: 70%;
+        text-align: center;
+        min-width: auto;
+      }
+      @include media(xs){
+        max-width: 90%;
+        text-align: center;
+        padding: 1em 0;
+      }
+      & h4{
+        font-family: $fuenteParrafo;
+        font-size: .9em;
+        color: $blanco;
+        text-transform: capitalize;
+        margin: .5em 0;
+        @include media(sm) {
+          font-size: 1.2em;
+        }
+        @include media(xs){
+          font-size: 1.1em;
+        }
+      }
+      & small{
+        color:darken($blanco, 30%);
+        text-transform: uppercase;
+        display: block;
+        font-size: .8em;
+        margin-bottom: 1em;
+      }
+      & figure{
+        position: relative;
+        height: 250px;
+        width: 100%;
+        @include media(md) {
+          width: auto;
+          min-width:250px;
+        }
+        @include media(sm) {
+          width: auto;
+          min-width:250px;
+        }
+        @include media(xs) {
+          width: auto;
+          min-width:250px;
+        }
+        & img{
+          width: 100%;
+          @include media(md) {
+            height: 250px;
+            width: auto;
+            min-width:250px;
+          }
+          @include media(sm) {
+            height: 250px;
+            width: auto;
+            min-width:250px;
+          }
+          @include media(xs) {
+            height: 250px;
+            width: auto;
+            min-width:250px;
+          }
+          &.pd_smile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -2;
+          }
+        }
+      }
+      & a img{
+        height: 35px;
+        @include transition(opacity .5s ease);
+        &:hover{
+          opacity: .6;
+        }
+      }
+    }
+  }
+  & div.team__contenido{
+    flex: 1 1 20%;
+    width: 100px;
+    text-align: right;
+    z-index: 5;
+    @include media(md) {
+      text-align: center;
+      width: 100%;
+      margin-bottom: 2em;
+      & p{
+        color: $blanco;
+      }
+    };
+    @include media(sm) {
+      width: 70%;
+      margin-bottom: 2em;
+      & p{
+        color: $blanco;
+      }
+    };
+    @include media(xs) {
+      width: 70%;
+      margin-bottom: 2em;
+      & p{
+        color: $blanco;
+      }
+    };
+  }
+}
+
+section#blog{
+  background-color: $blanco;
+  box-sizing: border-box;
+  padding: 5em 10%;
+  margin: 5em 0;
+  @include media(md){
+    position: relative;
+    margin: 0;
+    padding: 5em 10%;
+  };
+  @include media(sm){
+    background-color: transparent;
+    position: relative;
+    margin: 0;
+    padding: 20% 10% 4em;
+  };
+  @include media(xs){
+    background-color: transparent;
+    position: relative;
+    margin: 0;
+    padding: 50% 10% 4em;
+  }
+  & div.blog__entradas{
+    margin-top: 3em;
+    display: inline-flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    @include media(md) {
+      display: flex;
+      flex-flow: row nowrap;
+    };
+    @include media(sm) {
+      display: flex;
+      flex-flow: row wrap;
+    };
+    @include media(xs) {
+      display: flex;
+      flex-flow: column nowrap;
+    }
+    & div.blog__card{
+      background-color: darken($blanco, 3%);
+      flex: 0 1 30%;
+      padding-left: 1em;
+      box-shadow: 0 1px 3px 0 #d4d4d5,0 0 0 1px #d4d4d5;
+      -webkit-box-shadow: 0 1px 3px 0 #d4d4d5,0 0 0 1px #d4d4d5;
+      @include media(sm) {
+        margin-bottom: 3em;
+        flex: 0 1 46%;
+      }
+      @include media(xs) {
+        margin-bottom: 3em;
+        flex: auto;
+      }
+      & .blog__header{
+        height: 250px;
+        @include media(md) {
+          max-height: 200px;
+        }
+      }
+      & .blog__body{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        @include media(md) {
+          max-height: 130px;
+        }
+        @include media(sm) {
+          max-height: 130px;
+        }
+        @include media(xs) {
+          max-height: 130px;
+        }
+        & svg.blog__button{
+          flex: 0 1 auto;
+          & polygon:hover{
+            fill: lighten($sec, 10%);
+            @include transition(fill .3s ease-out);
+          }
+        }
+        & .blog__cardInfo{
+          flex: 0 1 70%;
+          margin-top: 1em;
+          & h3{
+            color: $gris;
+            padding-top: .4em;
+            font-size: 1em;
+            text-transform: none;
+            font-family: $fuenteParrafo
+          }
+          & small{
+            color: lighten($gris, 20%);;
+          }
+        }
+      }
+      & img{
+        width: 120%;
+        @include media(md){
+          height: auto;
+        }
+        @include media(sm){
+          width: 100%;
+          height: auto;
+        }
+        @include media(xs){
+          width: auto;
+          height: 100%;
+        };
+      };//fin img
+    };
+  }
+}
+
+section#contact{
+  height: 80vh;
+  position: relative;
+  @include media(sm) {
+    height: auto;
+  }
+  @include media(xs) {
+    height: auto;
+  }
+  & div.img__contacto{
+    //flex: 0 1 100%;
+    position: absolute;
+    width: 80%;
+    background-image: url('../img/fotos/pd-28.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+    height: 80vh;
+    z-index: -100;
+    @include media(sm) {
+      position: static;
+      width: 100%;
+      height: 270px;
+      background-position: center;
+    }
+    @include media(xs) {
+      position: static;
+      width: 100%;
+      height: 220px;
+      background-position: center;
+    }
+  }
+  & div.contacto__mail{
+    text-align: center;
+    padding-top: 30vh;
+    padding-right: 10%;
+    vertical-align: middle;
+    margin-left: auto;
+    width: 20%;
+    @include media(sm) {
+      margin: 0;
+      width: 100%;
+      padding: 4em 20%;
+      box-sizing: border-box;
+      background-color: $sec;
+    }
+    @include media(xs) {
+      margin: 0;
+      width: 100%;
+      padding: 4em 20%;
+      box-sizing: border-box;
+      background-color: $sec;
+    }
+    & h3{
+      display: inline-flex;
+      align-items: center;
+    }
+    & img{
+      height: 50px;
+      margin-right: 5px;
+    }
+    & p{
+      color: $blanco
+    }
+    & a.btn-primario{
+      display: inline-block;
+      margin: 3em auto;
+      background-color: rgba(7,36,54,40);
+      @include media(sm) {
+        width: 80%;
+      }
+      @include media(xs) {
+        width: 80%;
+      }
+    }
+  }
+
+}
+
+footer{
+  background-color: $sec;
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 3em 10%;
+  justify-content: space-between;
+  align-items: flex-end;
+  @include media(sm) {
+    align-items: center;
+    flex-flow: column nowrap;
+  }
+  @include media(xs) {
+    align-items: center;
+    flex-flow: column nowrap;
+  }
+  & .footer_logo{
+    display: inline-flex;
+    flex-flow: row nowrap;
+    order: 1;
+    @include media(sm) {
+      order: 2;
+    }
+    @include media(xs) {
+      order: 2;
+    }
+    & img{
+      height: 60px;
+      @include media(sm) {
+        height: 100px;
+        margin-bottom: 2em;
+      }
+      @include media(xs) {
+        height: 100px;
+        margin-bottom: 2em;
+      }
+    }
+    & div.footer_datascience{
+      margin-left: 10px;
+      flex: 0 1 auto;
+      @include media(sm) {
+        display: none;
+      }
+      @include media(xs) {
+        display: none;
+      }
+      & img.icon_social{
+        height: 35px;
+        margin: .3em .5em;
+      }
+    }
+  }
+  & h5, small{
+    display: block;
+    color: $blanco;
+    font-weight: 400;
+  }
+  & .credits{
+    order: 2;
+    @include media(sm) {
+      order: 3;
+      margin-top: 3em;
+    }
+    @include media(xs) {
+      order: 3;
+      margin-top: 3em;
+    }
+  }
+  & span{
+    display: flex;
+    align-items: center;
+    letter-spacing: 2px;
+
+    @include media(sm) {
+      justify-content: center;
+      margin-bottom: 1em;
+      font-size: 1.2em;
+    };
+    @include media(xs) {
+      justify-content: center;
+      margin-bottom: 1em;
+      font-size: 1.2em;
+    };
+  }
+  & form{
+    order: 3;
+    @include media(sm) {
+      order: 1;
+      width: 100%;
+      margin-top: 10vh;
+    }
+    @include media(xs) {
+      order: 1;
+      width: 100%;
+      margin-top: 10vh;
+    }
+    & img {
+      height: 30px;
+      margin-right: 10px;
+    }
+    & input{
+      height: 26px;
+      width: 170px;
+      border-radius: 3px;
+      border: none;
+      padding: 3px 7px;
+      margin-top: .5em;
+      @include media(sm) {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+        text-align: center;
+        padding: 10px;
+        height: auto;
+        color: lighten($gris, 30%);
+      }
+      @include media(xs) {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+        text-align: center;
+        padding: 10px;
+        height: auto;
+        color: lighten($gris, 30%);
+      }
+    }
+  }//fin form
+
+}
+
+
+//botones:
+div.btn-container{
+  display: flex;
+  align-items: stretch;
+  margin-top: 4em;
+  @include media(sm){
+    flex-flow: row;
+    align-items: stretch;
+    justify-content: flex-end;
+    & .btn-primario.btn-icono{
+      padding: 14px 25px;
+    }
+  }
+  @include media(xs){
+    flex-flow: column;
+    align-items: flex-end;
+    & .btn-primario.btn-icono{
+      margin: 1em 0;
+      padding: 14px 25px;
+    }
+  }
+
+}
+button.btn-primario, a.btn-primario{
+    background: $blanco;
+    border: $pri 2px solid;
+    @include gradient-border($color1, $color2, 3px, 'to right');
+    text-transform: uppercase;
+    @include transition(color .5s ease);
+    padding: 18px 25px;
+    position: relative;
+    color: $pri;
+    display: flex;
+    align-items: center;
+    font: {
+      family: $fuenteParrafo;
+      weight: 400;
+      size: 14px;
+    };
+    &:hover{
+      color: $blanco;
+      background: linear-gradient(135deg, #FC6234 0%, #FFE86A 100%);
+      padding: 18px 28px;
+      border: none;
+      }
+    &.btn-icono{
+      padding: 5px 25px;
+      margin-right: 20px;
+      & img{
+        display: inline;
+        height: 35px;
+        margin-right: 10px;
+      }
+      &:hover{
+        padding: 5px 28px;
+        @include media(xs){
+          padding: 14px 28px;
+          }
+        }
+      }
+
+    }
+
+button.btn-secundario{
+  background: $pri;
+  color: $blanco;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-size: .6em;
+  @include media(sm) {
+    justify-content: center;
+    width: 100%;
+    margin: 1.5em 0;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 20vh;
+  };
+  @include media(xs) {
+    justify-content: center;
+    width: 100%;
+    margin: 1.5em 0;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 20vh;
+  };
+}
+
+
+.oculto{
+  visibility: hidden;
+  display: none;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.fadeInTop{
+  opacity: 0;
+  animation: fadeIn .6s ease-in both;
+}
+
+.changeOp{
+  animation: apareceOp .2s ease-in both;
+}
